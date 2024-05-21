@@ -1,0 +1,24 @@
+[
+    {
+        "nombre": "Boris",
+        "apellido": "Rengel",
+        "direccion": "Loja",
+        "cedula": "1104882814001",
+        "tipo_retencion": "educativo",
+        "descripcion": "Test",
+        "monto": 1000.0,
+        "fecha_emision": "2024-05-21",
+        "retencion": "80.00"
+    },
+    {
+        "nombre": "Jose",
+        "apellido": "Encalada",
+        "direccion": "Loja",
+        "cedula": "1104882815001",
+        "tipo_retencion": "profesional",
+        "descripcion": "Test2",
+        "monto": 100.0,
+        "fecha_emision": "2024-05-21",
+        "retencion": "10.00"
+    }
+]

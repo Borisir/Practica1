@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla de Facturas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <h1>Tabla de Facturas</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>RUC</th>
+                <th>Nombre</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for factura in facturas %}
+                <tr >
+                    <td>{{ factura.cedula }}</td>
+                    <td>{{ factura.nombre }} {{ factura.apellido }}</td>
+                    <td>
+                        <a style="cursor: pointer;" onclick="window.location.href='/detalle_factura/{{ factura.cedula }}'">
+                            <img src="static/search.png"/>
+                        </a>
+                        <a style="cursor: pointer;" href="{{ url_for('factura_blueprint.eliminar_factura', cedula=factura.cedula) }}"
+                            onclick="return confirm('¿Estás seguro que deseas eliminar esta factura?');">
+                            <img src="static/trash.png"/>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button onclick="window.location.href='/'">Volver</button>
+</body>
+</html>

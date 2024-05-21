@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Facturación</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script>
+        function mostrarFormulario() {
+            document.getElementById('formulario').style.display = 'block';
+            document.getElementById('tabla').style.display = 'none';
+        }
+
+        function mostrarTabla() {
+            window.location.href = "/tabla_facturas";
+        }
+
+        function calcularRetencion() {
+            var tipoRetencion = document.getElementById('tipo_retencion').value;
+            var monto = parseFloat(document.getElementById('monto').value);
+            var retencion = 0;
+
+            if (!isNaN(monto)) {
+                if (tipoRetencion === 'educativo') {
+                    retencion = monto * 0.08;
+                } else if (tipoRetencion === 'profesional') {
+                    retencion = monto * 0.10;
+                }
+            }
+
+            document.getElementById('retencion').value = retencion.toFixed(2);
+        }
+        function validarRUC(input) {
+            var ruc = input.value;
+            var rucRegex = /^[0-9]{1,13}$/;
+            if (!rucRegex.test(ruc)) {
+                alert("El RUC debe contener solo números y tener hasta 13 dígitos.");
+                input.value = "";
+                input.focus();
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Sistema de Facturación</h1>
+    <div class="button-container">
+        <button onclick="mostrarFormulario()">Mostrar Formulario</button>
+        <button onclick="mostrarTabla()">Mostrar Tabla</button>
+    </div>
+
+    <div id="formulario" style="display: none;">
+        <h2>Formulario de Facturación</h2>
+        <form action="/procesar_factura" method="POST">
+            <input type="hidden" name="fecha_emision" id="fecha_emision"> <!-- campo oculto para la fecha actual -->
+
+            <div class="form-columns">
+                <div class="form-column">
+                    <label>Nombre:</label>
+                    <input type="text" name="nombre" required><br><br>
+
+                    <label>Dirección:</label>
+                    <input type="text" name="direccion" required><br><br>
+                </div>
+
+                <div class="form-column">
+                    <label>Apellido:</label>
+                    <input type="text" name="apellido" required><br><br>
+
+                    <label>RUC:</label>
+                    <input type="text" name="cedula" required maxlength="13" oninput="validarRUC(this)"><br><br>
+                </div>
+            </div>
+
+            <div class="form-columns">
+                <div class="form-column">
+                    <label>Tipo de retención:</label>
+                    <select name="tipo_retencion" id="tipo_retencion" onchange="calcularRetencion()">
+                        <option value="educativo">Educativo</option>
+                        <option value="profesional">Profesional</option>
+                    </select><br><br>
+                </div>
+            </div>
+
+            <label>Descripción:</label><br>
+            <textarea name="descripcion" rows="4" cols="50" required></textarea><br><br>
+
+            <div class="form-columns">
+                <div class="form-column">
+                    <label>Monto:</label>
+                    <input type="number" name="monto" id="monto" step="0.01" required oninput="calcularRetencion()"><br><br>
+                </div>
+
+                <div class="form-column">
+                    <label>Retención:</label>
+                    <input type="text" id="retencion" name="retencion" readonly><br><br>
+                </div>
+            </div>
+
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
+
+    <script>
+        // JavaScript para obtener la fecha actual y llenar el campo oculto
+        document.addEventListener('DOMContentLoaded', function() {
+            var fechaHoy = new Date();
+            var fechaFormatted = fechaHoy.toISOString().substr(0, 10); // Formato YYYY-MM-DD
+            document.getElementById('fecha_emision').value = fechaFormatted;
+        });
+    </script>
+</body>
+</html>

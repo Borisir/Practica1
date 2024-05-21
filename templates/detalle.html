@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de Factura</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <h1>Detalle de Factura</h1>
+    {% if factura %}
+        <p><strong>Nombre:</strong> {{ factura.nombre }}</p>
+        <p><strong>Apellido:</strong> {{ factura.apellido }}</p>
+        <p><strong>Dirección:</strong> {{ factura.direccion }}</p>
+        <p><strong>RUC:</strong> {{ factura.cedula }}</p>
+        <p><strong>Tipo de retención:</strong> {{ factura.tipo_retencion }}</p>
+        <p><strong>Descripción:</strong> {{ factura.descripcion }}</p>
+        <p><strong>Monto:</strong> {{ factura.monto }}</p>
+        <p><strong>Retención:</strong> {{ factura.retencion }} %</p>
+        <p><strong>Fecha de emisión:</strong> {{ factura.fecha_emision }}</p>
+    {% else %}
+        <p>No se encontró la factura.</p>
+    {% endif %}
+    <button onclick="window.location.href='/tabla_facturas'">Volver a la Tabla</button>
+</body>
+</html>
